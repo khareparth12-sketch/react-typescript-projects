@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import type { Task, TaskStatus } from "./types/task";
+import TaskForm from "./components/TaskForm";
+import TaskList from "./components/TaskList";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  function handleAddTask(title: string, priority: Task["priority"]) {
+    const newTask: Task = {
+      id: Date.now(),
+      title,
+      status: "todo",
+      priority,
+    };
+
+    setTasks((prev) => [...prev, newTask]);
+  }
+
+  function handleDeleteTask(id: number) {
+    setTasks((prev) => prev.filter((task) => task.id !== id));
+  }
+
+  function handleStatusChange(id: number, status: TaskStatus) {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id ? { ...task, status } : task
+      )
+    );
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={{ padding: "20px" }}>
+      <h1>Task Workflow Manager</h1>
+
+      <TaskForm onAddTask={handleAddTask} />
+      <TaskList
+        tasks={tasks}
+        onDelete={handleDeleteTask}
+        onStatusChange={handleStatusChange}
+      />
+    </div>
+  );
 }
 
-export default App
+export default App;
