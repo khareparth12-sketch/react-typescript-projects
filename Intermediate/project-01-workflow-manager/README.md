@@ -1,73 +1,72 @@
-# React + TypeScript + Vite
+# Task Workflow Manager Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+A dashboard-style task management application built using **React + TypeScript** to simulate real-world frontend workflows.
 
-Currently, two official plugins are available:
+This project focuses on **state management, component architecture, derived state, and UI structure**, rather than backend complexity. It represents the transition from beginner React concepts to intermediate, production-style thinking.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Features
+- Add tasks with title and priority
+- Update task status (Todo → In Progress → Done)
+- Delete tasks
+- Filter tasks by status
+- Sort tasks by priority
+- Persist tasks using `localStorage`
+- Dark-themed dashboard UI
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Concepts Practiced
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### React
+- Controlled form inputs
+- Lifting state up
+- Centralized state management
+- Immutable state updates
+- Derived state (filtering & sorting)
+- Component responsibility and data flow
+- Side effects with `useEffect`
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### TypeScript
+- Strongly typed state and props
+- Union types for task status and priority
+- `import type` usage
+- Interface-driven data modeling
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Frontend Architecture
+- Separation of logic and presentation
+- Reusable, focused components
+- Dashboard-style layout structure
+- Avoiding duplicate sources of truth
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Tech Stack
+- React
+- TypeScript
+- Vite
+- CSS (custom styling, no UI libraries)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Project Structure
+src/
+├── components/
+│ ├── TaskForm.tsx
+│ ├── TaskList.tsx
+│ └── TaskItem.tsx
+├── types/
+│ └── task.ts
+├── App.tsx
+├── main.tsx
+└── index.css
+
+
+---
+
+## How to Run Locally
+```bash
+npm install
+npm run dev

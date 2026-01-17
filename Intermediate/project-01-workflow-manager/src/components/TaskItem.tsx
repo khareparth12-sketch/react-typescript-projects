@@ -14,18 +14,25 @@ function TaskItem({ task, onDelete, onStatusChange }: TaskItemProps) {
   }
 
   return (
-    <li>
-      <strong>{task.title}</strong> — {task.priority} — {task.status}
+    <li className="task-card">
+      <div>
+        <strong>{task.title}</strong>
+        <div className="meta">
+          <span className={`badge ${task.priority}`}>{task.priority}</span>
+          <span className={`badge status ${task.status}`}>{task.status}</span>
+        </div>
+      </div>
 
-      <button
-        onClick={() =>
-          onStatusChange(task.id, getNextStatus(task.status))
-        }
-      >
-        Advance
-      </button>
-
-      <button onClick={() => onDelete(task.id)}>Delete</button>
+      <div className="actions">
+        <button
+          onClick={() => onStatusChange(task.id, getNextStatus(task.status))}
+        >
+          Advance
+        </button>
+        <button className="danger" onClick={() => onDelete(task.id)}>
+          Delete
+        </button>
+      </div>
     </li>
   );
 }

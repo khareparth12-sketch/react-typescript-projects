@@ -1,10 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Task, TaskStatus } from "./types/task";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
 
 function App() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const stored = localStorage.getItem("tasks");
+    return stored ? JSON.parse(stored) : [];
+  });
+  const [filterStatus, setFilterStatus] = useState<TaskStatus | "all">("all");
+  const [sortByPriority, setSortByPriority] = useState<"none" | "priority">(
+    "none",
+  );
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  const visibleTasks = [...tasks]
+    .filter((task) =>
+      filterStatus === "all" ? true : task.status === filterStatus,
+    )
+    .sort((a, b) => {
+      if (sortByPriority === "none") return 0;
+
+      const priorityOrder = {
+        high: 3,
+        medium: 2,
+        low: 1,
+      };
+
+      return priorityOrder[b.priority] - priorityOrder[a.priority];
+    });
 
   function handleAddTask(title: string, priority: Task["priority"]) {
     const newTask: Task = {
@@ -23,22 +50,49 @@ function App() {
 
   function handleStatusChange(id: number, status: TaskStatus) {
     setTasks((prev) =>
-      prev.map((task) =>
-        task.id === id ? { ...task, status } : task
-      )
+      prev.map((task) => (task.id === id ? { ...task, status } : task)),
     );
   }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Task Workflow Manager</h1>
+    <div className="container">
+      <header className="header">
+        <h1>Task Workflow Manager</h1>
+      </header>
 
-      <TaskForm onAddTask={handleAddTask} />
-      <TaskList
-        tasks={tasks}
-        onDelete={handleDeleteTask}
-        onStatusChange={handleStatusChange}
-      />
+      <section className="controls">
+        <TaskForm onAddTask={handleAddTask} />
+
+        <div className="filters">
+          <select
+            value={filterStatus}
+            onChange={(e) =>
+              setFilterStatus(e.target.value as TaskStatus | "all")
+            }
+          >
+            <option value="all">All</option>
+            <option value="todo">Todo</option>
+            <option value="in-progress">In Progress</option>
+            <option value="done">Done</option>
+          </select>
+
+          <button
+            onClick={() =>
+              setSortByPriority(sortByPriority === "none" ? "priority" : "none")
+            }
+          >
+            {sortByPriority === "none" ? "Sort by Priority" : "Clear Sort"}
+          </button>
+        </div>
+      </section>
+
+      <section className="list">
+        <TaskList
+          tasks={visibleTasks}
+          onDelete={handleDeleteTask}
+          onStatusChange={handleStatusChange}
+        />
+      </section>
     </div>
   );
 }
