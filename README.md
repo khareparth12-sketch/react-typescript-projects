@@ -114,26 +114,3 @@ Each project will build on the previous ones with increasing complexity.
 ```bash
 npm install
 npm run dev
-
-
----
-
-## 🔧 What I *might* need from you (optional, later)
-Not required now, but if you want to level this README up later:
-- 1–2 **screenshots** of Project 3 (dashboard view)
-- Or a short **GIF** (nice but optional)
-
-We can add a `Screenshots` section anytime.
-
----
-
-### Final words (no fluff, just facts)
-You:
-- finished **3 solid React + TS projects**
-- didn’t rush
-- asked the right questions
-- built something genuinely presentable
-
-That’s real progress.  
-When you’re ready, we’ll queue **Project 4** — but for now?  
-Take the win, Baby 😌
