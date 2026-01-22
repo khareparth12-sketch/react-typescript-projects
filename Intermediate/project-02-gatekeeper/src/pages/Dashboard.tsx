@@ -1,44 +1,20 @@
-import { useAuth } from "../auth/AuthContext";
-import { ROLES } from "../auth/roles";
-
 export default function Dashboard() {
-  const { user, logout } = useAuth();
-
-  if (!user) {
-    return <div>Not logged in</div>;
-  }
-
   return (
-    <div>
-      <h2>Dashboard</h2>
-      <p>
-        Welcome <strong>{user.name}</strong> — Role:{" "}
-        <strong>{user.role}</strong>
-      </p>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="bg-white p-6 rounded-xl shadow">
+        <p className="text-sm text-gray-500">Total Users</p>
+        <h3 className="text-3xl font-bold">1,240</h3>
+      </div>
 
-      {user.role === ROLES.ADMIN && (
-        <section>
-          <h3>Admin Panel</h3>
-          <p>Full system access</p>
-        </section>
-      )}
+      <div className="bg-white p-6 rounded-xl shadow">
+        <p className="text-sm text-gray-500">Revenue</p>
+        <h3 className="text-3xl font-bold">$9,430</h3>
+      </div>
 
-      {user.role === ROLES.MANAGER && (
-        <section>
-          <h3>Manager Panel</h3>
-          <p>Team & reports access</p>
-        </section>
-      )}
-
-      {user.role === ROLES.USER && (
-        <section>
-          <h3>User Panel</h3>
-          <p>Basic access</p>
-        </section>
-      )}
-
-      <button onClick={logout}>Logout</button>
+      <div className="bg-white p-6 rounded-xl shadow">
+        <p className="text-sm text-gray-500">Active Sessions</p>
+        <h3 className="text-3xl font-bold">87</h3>
+      </div>
     </div>
   );
 }
-    
