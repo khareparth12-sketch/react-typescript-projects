@@ -1,5 +1,6 @@
-import { createContext, useContext, useState, ReactNode } from "react";
-import { Role, ROLES } from "./roles";
+import { createContext, useContext, useState} from "react";
+import type { ReactNode } from "react";
+import type { Role, ROLES } from "./roles";
 
 type User = {
   id: string;
